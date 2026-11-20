@@ -86,7 +86,7 @@ jobs:
                   evidence['candidate_saved']=True
                   evidence['validation']=validate_ics(raw)
                   prior={}
-                  for saved in sorted((root/'ics-probe').glob('candidate-*.ics')):
+                  for saved in sorted((root/'ics-probe').glob('candidate-*.ics'))[-2:]:
                       prior[saved.name]={'body_sha256':hashlib.sha256(saved.read_bytes()).hexdigest(),'validation':validate_ics(saved.read_bytes())}
                   evidence['independent_saved_candidate_checks']=prior
               else:evidence['validation']='response_invalid'

@@ -1,0 +1,67 @@
+{
+  "scope": "Official critical BLS series only; one request per URL; no variants or automatic retries",
+  "checked_at": "2026-11-20T12:26:47.763304+00:00",
+  "coverage_GO": false,
+  "results": [
+    {
+      "series": "CPI",
+      "source": "https://www.bls.gov/schedule/news_release/cpi.htm",
+      "request_started_at": "2026-11-20T12:26:47.575760+00:00",
+      "coverage_GO": false,
+      "http_status": 200,
+      "final_url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+      "bytes": 55415,
+      "sha256": "03d8ae706002d30efe72ab92b71902a4a58d3f5b17a7fcc5b06eafc2a1ee752f",
+      "status": "original_saved_validation_pending",
+      "response_completed_at": "2026-11-20T12:26:47.701571+00:00"
+    },
+    {
+      "series": "PPI",
+      "source": "https://www.bls.gov/schedule/news_release/ppi.htm",
+      "request_started_at": "2026-11-20T12:26:47.576049+00:00",
+      "coverage_GO": false,
+      "http_status": 200,
+      "final_url": "https://www.bls.gov/schedule/news_release/ppi.htm",
+      "bytes": 55415,
+      "sha256": "e92e4867a5657e31583f6725bde3d7b6db008cfdbf8c58cc9d2d595d0815c767",
+      "status": "original_saved_validation_pending",
+      "response_completed_at": "2026-11-20T12:26:47.698654+00:00"
+    },
+    {
+      "series": "Employment",
+      "source": "https://www.bls.gov/schedule/news_release/empsit.htm",
+      "request_started_at": "2026-11-20T12:26:47.576291+00:00",
+      "coverage_GO": false,
+      "http_status": 200,
+      "final_url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+      "bytes": 55421,
+      "sha256": "6416c0c679f8fa99a1bf8ad0b701b98913a09dd7eee14ef3a927c6af37abadbb",
+      "status": "original_saved_validation_pending",
+      "response_completed_at": "2026-11-20T12:26:47.698604+00:00"
+    },
+    {
+      "series": "JOLTS",
+      "source": "https://www.bls.gov/schedule/news_release/jolts.htm",
+      "request_started_at": "2026-11-20T12:26:47.576474+00:00",
+      "coverage_GO": false,
+      "http_status": 200,
+      "final_url": "https://www.bls.gov/schedule/news_release/jolts.htm",
+      "bytes": 55436,
+      "sha256": "37228deed92a870db953b11517cc3409856247ffb0e1bcaf771484568b3adf99",
+      "status": "original_saved_validation_pending",
+      "response_completed_at": "2026-11-20T12:26:47.762453+00:00"
+    },
+    {
+      "series": "ECI",
+      "source": "https://www.bls.gov/schedule/news_release/eci.htm",
+      "request_started_at": "2026-11-20T12:26:47.576724+00:00",
+      "coverage_GO": false,
+      "http_status": 200,
+      "final_url": "https://www.bls.gov/schedule/news_release/eci.htm",
+      "bytes": 54526,
+      "sha256": "2a52a6637d08ddc8f229730043b7222c9ff59f52c86e4d767b84940dc0b77f2b",
+      "status": "original_saved_validation_pending",
+      "response_completed_at": "2026-11-20T12:26:47.701524+00:00"
+    }
+  ]
+}

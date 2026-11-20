@@ -22,9 +22,17 @@ Both original bodies have SHA256: 92a350111ace106deaab5584e4084366bd367b594a0d0b
 - [Original candidates and attempt evidence](site/ics-probe) include hashes, actual acquisition timestamps, headers, triggers and parsed dates. Run 2 revalidates both independently downloaded candidates.
 - No candidate was promoted to latest.json. No previous verified latest existed in these runs. The probe never writes latest* and records before/after hashes; failures cannot advance an accepted timestamp. This is not a claim that a real prior verified ICS was recovered during a failure.
 
+## Provider discrepancy investigation
+
+The missing 20 November event is absent from the original downloaded bytes before parsing. The same event name exists in the file for 19 December 2025, so the evidence concerns the specific 2026 release, not a global exclusion of the title by our collector.
+
+The [BLS Weekly Update](https://www.bls.gov/opub/update.htm) independently confirms the 20 November release. [BLS subscription documentation](https://www.bls.gov/help/hlpiCAL.htm) says the ICS contains most national releases, not all, with a tentative Friday update schedule. The verified finding is an official-feed coverage discrepancy. An old Last-Modified is consistent with stale publication but does not prove its internal cause. No calendar entries or source publication times were invented.
+
+The scheduled HTML collector has been retired: renew.yml now exposes manual dispatch only. Its historical HTTP403 evidence and code remain intact. No new HTML retry was executed.
+
 ## Scheduled acquisition
 
-The workflow is enabled on main. A temporary five-minute schedule was tested from 11:23:58 UTC; no scheduled run appeared by 11:34:12 UTC. **Actual scheduled execution remains unverified.** It is not inferred from successful manual runs.
+The ICS workflow is enabled on main. Temporary five-minute scheduling did not produce an observable scheduled run during this review. The repository API filtered specifically by event=schedule returned total_count=0 at 11:45:53 UTC on20November2026. **Actual scheduled execution remains unverified**, independently of the two successful manual acquisitions.
 
 The temporary schedule has been reduced to **minute 23 every two hours UTC**, using only standard free public runners. No follow-up app automation or paid service was created. GitHub may delay or drop scheduled jobs. Transport success remains separate from coverage_GO=false.
 

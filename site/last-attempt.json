@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-20T11:09:52.800288+00:00",
+  "status": "coverage_unknown",
+  "source": "https://www.bls.gov/schedule/2026/11_sched_list.htm",
+  "error_type": "HTTPError",
+  "http_status": 403,
+  "latest_not_refreshed": true
+}

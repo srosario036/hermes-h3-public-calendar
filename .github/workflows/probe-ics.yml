@@ -2,7 +2,7 @@ name: Official BLS iCalendar probe
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *' # Bounded scheduled-trigger verification; restore two hours after proof.
+    - cron: '23 */2 * * *' # Low-cost acquisition monitoring; scheduled execution not yet proven.
 concurrency:
   group: official-calendar
   cancel-in-progress: false

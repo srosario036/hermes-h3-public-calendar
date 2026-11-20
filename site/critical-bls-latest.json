@@ -1,0 +1,372 @@
+{
+  "schema": "official-critical-bls-v1",
+  "content": {
+    "series": {
+      "CPI": {
+        "source": "https://www.bls.gov/schedule/news_release/cpi.htm",
+        "http_status": 200,
+        "acquired_at": "2026-11-20T12:37:02.242073+00:00",
+        "valid_until": "2026-11-20T18:37:02.242073+00:00",
+        "provider_Last_Modified_header": null,
+        "provider_publication_at": null,
+        "raw_sha256": "03d8ae706002d30efe72ab92b71902a4a58d3f5b17a7fcc5b06eafc2a1ee752f",
+        "events": [
+          {
+            "at": "2026-11-10T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "October 2026"
+          },
+          {
+            "at": "2026-12-10T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "November 2026"
+          },
+          {
+            "at": "2027-01-13T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "December 2026"
+          },
+          {
+            "at": "2027-02-11T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "January 2027"
+          },
+          {
+            "at": "2027-03-10T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "February 2027"
+          },
+          {
+            "at": "2027-04-13T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "March 2027"
+          },
+          {
+            "at": "2027-05-12T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "April 2027"
+          },
+          {
+            "at": "2027-06-10T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "May 2027"
+          },
+          {
+            "at": "2027-07-14T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "June 2027"
+          },
+          {
+            "at": "2027-08-11T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "July 2027"
+          },
+          {
+            "at": "2027-09-14T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "August 2027"
+          },
+          {
+            "at": "2027-10-14T08:30:00-04:00",
+            "name": "Consumer Price Index",
+            "reference_period": "September 2027"
+          },
+          {
+            "at": "2027-11-10T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "October 2027"
+          },
+          {
+            "at": "2027-12-10T08:30:00-05:00",
+            "name": "Consumer Price Index",
+            "reference_period": "November 2027"
+          }
+        ]
+      },
+      "PPI": {
+        "source": "https://www.bls.gov/schedule/news_release/ppi.htm",
+        "http_status": 200,
+        "acquired_at": "2026-11-20T12:37:02.160182+00:00",
+        "valid_until": "2026-11-20T18:37:02.160182+00:00",
+        "provider_Last_Modified_header": null,
+        "provider_publication_at": null,
+        "raw_sha256": "e92e4867a5657e31583f6725bde3d7b6db008cfdbf8c58cc9d2d595d0815c767",
+        "events": [
+          {
+            "at": "2026-11-13T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "October 2026"
+          },
+          {
+            "at": "2026-12-15T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "November 2026"
+          },
+          {
+            "at": "2027-01-14T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "December 2026"
+          },
+          {
+            "at": "2027-02-12T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "January 2027"
+          },
+          {
+            "at": "2027-03-12T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "February 2027"
+          },
+          {
+            "at": "2027-04-14T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "March 2027"
+          },
+          {
+            "at": "2027-05-13T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "April 2027"
+          },
+          {
+            "at": "2027-06-11T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "May 2027"
+          },
+          {
+            "at": "2027-07-15T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "June 2027"
+          },
+          {
+            "at": "2027-08-10T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "July 2027"
+          },
+          {
+            "at": "2027-09-10T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "August 2027"
+          },
+          {
+            "at": "2027-10-15T08:30:00-04:00",
+            "name": "Producer Price Index",
+            "reference_period": "September 2027"
+          },
+          {
+            "at": "2027-11-12T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "October 2027"
+          },
+          {
+            "at": "2027-12-15T08:30:00-05:00",
+            "name": "Producer Price Index",
+            "reference_period": "November 2027"
+          }
+        ]
+      },
+      "Employment": {
+        "source": "https://www.bls.gov/schedule/news_release/empsit.htm",
+        "http_status": 200,
+        "acquired_at": "2026-11-20T12:37:02.151356+00:00",
+        "valid_until": "2026-11-20T18:37:02.151356+00:00",
+        "provider_Last_Modified_header": null,
+        "provider_publication_at": null,
+        "raw_sha256": "6416c0c679f8fa99a1bf8ad0b701b98913a09dd7eee14ef3a927c6af37abadbb",
+        "events": [
+          {
+            "at": "2026-11-06T08:30:00-05:00",
+            "name": "Employment Situation",
+            "reference_period": "October 2026"
+          },
+          {
+            "at": "2026-12-04T08:30:00-05:00",
+            "name": "Employment Situation",
+            "reference_period": "November 2026"
+          },
+          {
+            "at": "2027-01-08T08:30:00-05:00",
+            "name": "Employment Situation",
+            "reference_period": "December 2026"
+          },
+          {
+            "at": "2027-02-05T08:30:00-05:00",
+            "name": "Employment Situation",
+            "reference_period": "January 2027"
+          },
+          {
+            "at": "2027-03-05T08:30:00-05:00",
+            "name": "Employment Situation",
+            "reference_period": "February 2027"
+          },
+          {
+            "at": "2027-04-02T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "March 2027"
+          },
+          {
+            "at": "2027-05-07T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "April 2027"
+          },
+          {
+            "at": "2027-06-04T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "May 2027"
+          },
+          {
+            "at": "2027-07-02T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "June 2027"
+          },
+          {
+            "at": "2027-08-06T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "July 2027"
+          },
+          {
+            "at": "2027-09-03T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "August 2027"
+          },
+          {
+            "at": "2027-10-08T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "September 2027"
+          },
+          {
+            "at": "2027-11-05T08:30:00-04:00",
+            "name": "Employment Situation",
+            "reference_period": "October 2027"
+          },
+          {
+            "at": "2027-12-03T08:30:00-05:00",
+            "name": "Employment Situation",
+            "reference_period": "November 2027"
+          }
+        ]
+      },
+      "JOLTS": {
+        "source": "https://www.bls.gov/schedule/news_release/jolts.htm",
+        "http_status": 200,
+        "acquired_at": "2026-11-20T12:37:02.139777+00:00",
+        "valid_until": "2026-11-20T18:37:02.139777+00:00",
+        "provider_Last_Modified_header": null,
+        "provider_publication_at": null,
+        "raw_sha256": "37228deed92a870db953b11517cc3409856247ffb0e1bcaf771484568b3adf99",
+        "events": [
+          {
+            "at": "2026-12-01T10:00:00-05:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "October 2026"
+          },
+          {
+            "at": "2027-01-05T10:00:00-05:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "November 2026"
+          },
+          {
+            "at": "2027-02-02T10:00:00-05:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "December 2026"
+          },
+          {
+            "at": "2027-03-09T10:00:00-05:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "January 2027"
+          },
+          {
+            "at": "2027-03-30T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "February 2027"
+          },
+          {
+            "at": "2027-05-04T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "March 2027"
+          },
+          {
+            "at": "2027-06-02T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "April 2027"
+          },
+          {
+            "at": "2027-06-29T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "May 2027"
+          },
+          {
+            "at": "2027-08-03T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "June 2027"
+          },
+          {
+            "at": "2027-08-31T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "July 2027"
+          },
+          {
+            "at": "2027-10-05T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "August 2027"
+          },
+          {
+            "at": "2027-11-02T10:00:00-04:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "September 2027"
+          },
+          {
+            "at": "2027-12-01T10:00:00-05:00",
+            "name": "Job Openings and Labor Turnover Survey",
+            "reference_period": "October 2027"
+          }
+        ]
+      },
+      "ECI": {
+        "source": "https://www.bls.gov/schedule/news_release/eci.htm",
+        "http_status": 200,
+        "acquired_at": "2026-11-20T12:37:02.304707+00:00",
+        "valid_until": "2026-11-20T18:37:02.304707+00:00",
+        "provider_Last_Modified_header": null,
+        "provider_publication_at": null,
+        "raw_sha256": "2a52a6637d08ddc8f229730043b7222c9ff59f52c86e4d767b84940dc0b77f2b",
+        "events": [
+          {
+            "at": "2026-10-30T08:30:00-04:00",
+            "name": "Employment Cost Index",
+            "reference_period": "Third Quarter 2026"
+          },
+          {
+            "at": "2027-01-29T08:30:00-05:00",
+            "name": "Employment Cost Index",
+            "reference_period": "Fourth Quarter 2026"
+          },
+          {
+            "at": "2027-04-30T08:30:00-04:00",
+            "name": "Employment Cost Index",
+            "reference_period": "First Quarter 2027"
+          },
+          {
+            "at": "2027-07-30T08:30:00-04:00",
+            "name": "Employment Cost Index",
+            "reference_period": "Second Quarter 2027"
+          },
+          {
+            "at": "2027-10-29T08:30:00-04:00",
+            "name": "Employment Cost Index",
+            "reference_period": "Third Quarter 2027"
+          }
+        ]
+      }
+    },
+    "timezone_basis": {
+      "timezone": "America/New_York",
+      "official_convention_source": "https://www.bls.gov/schedule/2026/11_sched_list.htm",
+      "method": "BLS official calendar Eastern Time convention independently reviewed20Nov2026; series pages contain clock times without their own timezone marker. DST follows IANA rules, not fixed UTC offset."
+    }
+  },
+  "content_sha256": "525ee20260210e48c0d50b8f93193c68a47a56e348b9da5855a7c391532cfd6a",
+  "collector_sha256": "7a725772cfae64fde9e7c9ef4b610ca2741ef8ab1170ea89d4e46450f4e2b6c3",
+  "run_id": "44737252413",
+  "scope": "CPI/PPI/Employment/JOLTS/ECI only; not all BLS, Fed, BEA, Census, DOL or private-publisher events",
+  "publisher_signature": false
+}

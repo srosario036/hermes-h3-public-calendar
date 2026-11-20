@@ -1,8 +1,6 @@
 name: Official public BLS calendar
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 */2 * * *'
 permissions:
   contents: read
 concurrency:

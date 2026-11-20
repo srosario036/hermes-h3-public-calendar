@@ -1,0 +1,23 @@
+{
+  "source": "https://www.bls.gov/schedule/news_release/bls.ics",
+  "run_id": "44727010467",
+  "run_attempt": "1",
+  "trigger": "workflow_dispatch",
+  "request_started_at": "2026-11-20T11:22:13.221033+00:00",
+  "requests": 1,
+  "coverage": "unknown",
+  "consumer_integration_verified": false,
+  "latest_before": {},
+  "http_status": 200,
+  "final_url": "https://www.bls.gov/schedule/news_release/bls.ics",
+  "content_type": "text/calendar",
+  "server_date": "Fri, 20 Nov 2026 11:22:13 GMT",
+  "last_modified": "Wed, 10 Jun 2026 16:56:37 GMT",
+  "bytes": 80672,
+  "body_sha256": "92a350111ace106deaab5584e4084366bd367b594a0d0bad116008d82d63e501",
+  "candidate_saved": true,
+  "validation": "PENDING_FULL_ICALENDAR_AND_FRESHNESS_VALIDATION",
+  "response_completed_at": "2026-11-20T11:22:13.439863+00:00",
+  "latest_after": {},
+  "latest_preserved": true
+}

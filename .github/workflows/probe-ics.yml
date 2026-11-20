@@ -133,12 +133,29 @@ jobs:
           target.write_text(json.dumps({'scope':'Official critical BLS series only; one request per URL; no variants or automatic retries','checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'coverage_GO':False,'results':results},indent=2)+chr(10))
           print(json.dumps({'critical_sources_recorded':len(results),'HTTP_statuses':[r.get('http_status') for r in results],'coverage_GO':False}))
           PY
+      - name: Validate and renew only the five proven critical series
+        id: critical
+        shell: bash
+        run: |
+          if python3 -c "import json; d=json.load(open('site/ics-probe/critical-source-probe.json')); assert len(d['results'])==5 and all(r.get('http_status')==200 for r in d['results'])"; then
+            set +e
+            python3 collect_critical_bls.py --out site
+            result=$?
+            echo "result=$result" >> "$GITHUB_OUTPUT"
+            exit 0
+          else
+            echo 'Critical-source probe not successful; no repeated HTML attempts.'
+            echo 'result=1' >> "$GITHUB_OUTPUT"
+          fi
       - name: Persist only public probe evidence
         shell: bash
         run: |
           git config user.name 'public-calendar-bot'
           git config user.email 'calendar-bot@users.noreply.github.com'
           git add -- site/ics-probe
+          for path in site/critical-bls-latest.json site/critical-bls-last-attempt.json site/critical-sources; do
+            if [ -e "$path" ]; then git add -- "$path"; fi
+          done
           if ! git diff --cached --quiet; then
             git commit -m 'Record exact official BLS iCalendar probe'
             git push origin HEAD:main
@@ -147,3 +164,6 @@ jobs:
         if: steps.probe.outputs.status != '200'
         run: exit 1
 
+      - name: Keep critical refresh failure visible
+        if: steps.critical.outputs.result != '0'
+        run: exit 1

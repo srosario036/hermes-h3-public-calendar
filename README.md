@@ -1,39 +1,20 @@
-# Public official BLS calendar collector
+# Official public BLS calendar evidence
 
-This package is intended only for the separate PUBLIC repository
-`srosario036/hermes-h3-public-calendar`, authorized by its owner18Nov2026.
-It contains no trading data, private trading code, account identifiers, broker
-credentials, GCP credentials, inference tools, or H3 research results.
+Only public official calendar data and its collector belong here. No trading data, private code, credentials, Cloud access, inference or paid services.
 
-Files: `collect_bls.py` at repository root and `renew.yml` installed as
-`.github/workflows/renew.yml`. Main branch required. Explicit activation variable
-`H3_BLS_PUBLISH_ENABLED=true` is required in this exact public repository.
-Only standard `ubuntu-24.04` public GitHub-hosted execution is permitted. No
-artifacts/cache, larger runners, private runner billing or new subscriptions.
+## Current status — 20 November 2026
 
-Every2hours at minute17: one official HTTPS monthly BLS request,25sec timeout,
-2MB maximum, no redirects, exact table/month/timezone/schema checks. The original
-HTML hash, actual acquisition time and <=6hour expiry accompany public rows.
-Failure records coverage_unknown but NEVER refreshes the last verified copy.
+- Official iCalendar download succeeded twice independently from standard free public GitHub runners. Originals and hashes are in [site/ics-probe](site/ics-probe).
+- The ICS is **partial coverage**, not a complete calendar. BLS itself describes it as containing most national releases. See [official subscription documentation](https://www.bls.gov/help/hlpiCAL.htm).
+- The November monthly list and the [BLS Weekly Update](https://www.bls.gov/opub/update.htm) include a 20 November event absent from the downloaded ICS. This omission is present in the original bytes, before parsing.
+- ICS monitoring has a two-hour steady-state cadence. A configured cron is not proof of a scheduled execution; see [verification status](ICALENDAR_STATUS.md).
+- **Repeated scheduled HTML requests have been removed** from renew.yml. The failed run, collector and historical HTTP403 evidence remain available. The HTML collector can be dispatched manually only; no further manual retry was performed here.
+- No ICS candidate is published as an accepted latest.json. Download success is separate from complete event coverage and consumer integration.
 
-Potential public data endpoint after deployment:
-https://raw.githubusercontent.com/srosario036/hermes-h3-public-calendar/main/site/latest.json
+## Conservative consumption
 
-The H3 consumer must validate approved origin, schema, content hash, month and
-original acquisition/expiry; a copy/hash is not a BLS cryptographic signature.
-The separate v2 validator supports rollover; the existing H3 November-only
-importer is NOT silently changed or deployed. Complete consumer integration and
-freshness/failure tests are required before any trading GO.
+Positive official events may inform risk blocks. Missing entries never prove that no event exists. A separately verified official calendar review must cover the requested interval; unknown, expired or conflicting coverage cannot clear it.
 
-Schedules can be delayed/dropped by GitHub. After expiry or missing input,
-coverage stays unknown and trading stays blocked. A calendar shows selected
-national releases, not unscheduled news or constituent earnings. Unchanged
-content may legitimately receive a new timestamp only after a real new successful
-HTTP200 acquisition. Never infer absence from403 or copy old timestamps forward.
+Keep source bytes, hashes, actual acquisition times and unknown publication times distinct. A hash proves transfer integrity, not a BLS signature. Failures and copies must not advance accepted timestamps. Do not infer full coverage from the count of313 events or from a recent HTTP200 response.
 
-Acceptance before operational use: real successful acquisition from this runner,
-manual second genuine acquisition (no need to wait2hours), changed acquisition
-time/original hash integrity, scheduled trigger present, and expiry/error tests.
-If BLS also rejects this IP, record failure; do not switch to unofficial sources.
-
-No deployment or end-to-end success is claimed merely because this code exists.
+The public runner has no trading or Cloud credentials. It cannot authorize execution. No private consumer implementation is published in this repository.

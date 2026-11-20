@@ -100,6 +100,39 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'],'a') as out:out.write('status='+str(evidence.get('http_status'))+chr(10))
           print(json.dumps(evidence))
           PY
+      - name: Probe five critical official series once, without repeated HTML retries
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import concurrent.futures,datetime,hashlib,json,pathlib,urllib.request,urllib.error
+          target=pathlib.Path('site/ics-probe/critical-source-probe.json')
+          if target.exists():
+              print('One-shot critical-source probe already recorded; no new HTML requests.')
+              raise SystemExit(0)
+          sources={name:'https://www.bls.gov/schedule/news_release/'+page+'.htm' for name,page in [('CPI','cpi'),('PPI','ppi'),('Employment','empsit'),('JOLTS','jolts'),('ECI','eci')]}
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self,*a,**kw):return None
+          def probe(item):
+              name,url=item
+              record={'series':name,'source':url,'request_started_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'coverage_GO':False}
+              try:
+                  opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),NoRedirect)
+                  with opener.open(urllib.request.Request(url,headers={'User-Agent':'Public-official-calendar-integrity/1.0','Accept':'text/html'}),timeout=25) as response:
+                      raw=response.read(2_000_001)
+                      record.update(http_status=response.status,final_url=response.geturl(),bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
+                  if record['http_status']==200 and record['final_url']==url and len(raw)<=2_000_000:
+                      target.parent.mkdir(parents=True,exist_ok=True)
+                      (target.parent/('critical-'+name+'.html')).write_bytes(raw)
+                      record['status']='original_saved_validation_pending'
+                  else:record['status']='response_invalid'
+              except Exception as error:record.update(http_status=getattr(error,'code',None),error_type=type(error).__name__,status='coverage_unknown')
+              record['response_completed_at']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+              return record
+          with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:results=list(pool.map(probe,sources.items()))
+          target.parent.mkdir(parents=True,exist_ok=True)
+          target.write_text(json.dumps({'scope':'Official critical BLS series only; one request per URL; no variants or automatic retries','checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'coverage_GO':False,'results':results},indent=2)+chr(10))
+          print(json.dumps({'critical_sources_recorded':len(results),'HTTP_statuses':[r.get('http_status') for r in results],'coverage_GO':False}))
+          PY
       - name: Persist only public probe evidence
         shell: bash
         run: |

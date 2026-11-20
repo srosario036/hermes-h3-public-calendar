@@ -1,0 +1,48 @@
+name: Official public BLS calendar
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */2 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: official-calendar
+  cancel-in-progress: false
+jobs:
+  renew:
+    # Explicit activation/publication and exact repository checks. Never install
+    # this workflow in the private trading repository or a billable private run.
+    if: >-
+      github.repository == 'srosario036/hermes-h3-public-calendar' &&
+      github.event.repository.private == false &&
+      vars.H3_BLS_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Fetch only the official calendar
+        id: fetch
+        shell: bash
+        run: |
+          set +e
+          python3 collect_bls.py --out site
+          result=$?
+          echo "result=$result" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Commit public source evidence only
+        shell: bash
+        run: |
+          git config user.name 'public-calendar-bot'
+          git config user.email 'calendar-bot@users.noreply.github.com'
+          for path in site/latest.json site/last-attempt.json site/source.html; do
+            if [ -f "$path" ]; then git add -- "$path"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh official calendar evidence'
+            git push origin HEAD:main
+          fi
+      - name: Preserve a visible failure instead of claiming coverage
+        if: steps.fetch.outputs.result != '0'
+        run: exit 1

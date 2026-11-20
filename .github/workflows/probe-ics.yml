@@ -1,6 +1,11 @@
 name: Official BLS iCalendar probe
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *' # Temporary scheduled-trigger verification; reduce after proof.
+concurrency:
+  group: official-calendar
+  cancel-in-progress: false
 permissions:
   contents: read
 jobs:
@@ -18,6 +23,53 @@ jobs:
         run: |
           python3 - <<'PY'
           import datetime,hashlib,json,os,pathlib,urllib.request,urllib.error
+          from zoneinfo import ZoneInfo
+          import re
+          
+          def validate_ics(raw):
+              text=raw.decode('utf-8-sig')
+              lines=[]
+              for line in text.splitlines():
+                  if line.startswith((' ','\t')):
+                      if not lines:raise ValueError('orphan_fold')
+                      lines[-1]+=line[1:]
+                  else:lines.append(line)
+              lines=[x for x in lines if x]
+              if lines[0]!='BEGIN:VCALENDAR' or lines[-1]!='END:VCALENDAR' or lines.count('VERSION:2.0')!=1:raise ValueError('calendar_envelope')
+              stack=[];events=[];current=None
+              for line in lines:
+                  if line.startswith('BEGIN:'):
+                      component=line[6:];stack.append(component)
+                      if component=='VEVENT':
+                          if current is not None:raise ValueError('nested_event')
+                          current={}
+                  elif line.startswith('END:'):
+                      component=line[4:]
+                      if not stack or stack.pop()!=component:raise ValueError('component_integrity')
+                      if component=='VEVENT':events.append(current);current=None
+                  elif current is not None:
+                      if ':' not in line:raise ValueError('invalid_property')
+                      key,value=line.split(':',1)
+                      if key in current:raise ValueError('duplicate_property')
+                      current[key]=value
+              if stack or not events:raise ValueError('truncated_or_empty')
+              required=['TZID:US-Eastern','RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU','RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU','TZOFFSETFROM:-0500','TZOFFSETTO:-0400','TZOFFSETFROM:-0400','TZOFFSETTO:-0500']
+              if not all(x in lines for x in required):raise ValueError('unverified_vendor_timezone')
+              ny=ZoneInfo('America/New_York');uids=set();rows=[];missing_stamp=0
+              for e in events:
+                  uid=e.get('UID');name=e.get('SUMMARY');start=e.get('DTSTART;TZID=US-Eastern')
+                  if not uid or uid in uids or not name or not start:raise ValueError('event_identity_or_time')
+                  uids.add(uid)
+                  dt=datetime.datetime.strptime(start,'%Y%m%dT%H%M%S').replace(tzinfo=ny)
+                  if dt.astimezone(datetime.timezone.utc).astimezone(ny)!=dt:raise ValueError('timezone_roundtrip')
+                  if dt.hour not in (8,10) or dt.minute not in (0,30):raise ValueError('unexpected_release_time')
+                  missing_stamp+=int('DTSTAMP' not in e)
+                  rows.append({'uid':uid,'name':name,'at':dt.isoformat(),'utc':dt.astimezone(datetime.timezone.utc).isoformat()})
+              expected=[('03','10:00','Job Openings and Labor Turnover Survey'),('05','08:30','Productivity and Costs'),('06','08:30','Employment Situation'),('10','08:30','Consumer Price Index'),('10','08:30','Real Earnings'),('13','08:30','Producer Price Index'),('17','08:30','U.S. Import and Export Price Indexes'),('18','10:00','Employer-Reported Workplace Injuries and Illnesses (Annual)'),('20','10:00','State Employment and Unemployment (Monthly)'),('20','10:00','Total Factor Productivity for Major Industries')]
+              observed={(r['at'][:10],r['at'][11:16],r['name']) for r in rows if r['at'].startswith('2026-11')}
+              missing=[{'date':'2026-11-'+d,'time':t,'name':n} for d,t,n in expected if ('2026-11-'+d,t,n) not in observed]
+              return {'parsed_vendor_subset':True,'strict_RFC5545_valid':missing_stamp==0,'missing_required_DTSTAMP':missing_stamp,'events':len(rows),'unique_UIDs':len(uids),'first':min(r['at'] for r in rows),'last':max(r['at'] for r in rows),'timezone':'America/New_York','vendor_TZID':'US-Eastern','january_UTC_offset':str(datetime.datetime(2026,1,15,tzinfo=ny).utcoffset()),'july_UTC_offset':str(datetime.datetime(2026,7,15,tzinfo=ny).utcoffset()),'november_events':len(observed),'november_expected_in_reviewed_official_HTML':len(expected),'missing_from_reviewed_official_HTML':missing,'comparison_source':'https://www.bls.gov/schedule/2026/11_sched_list.htm','comparison_checked_at':'2026-11-20T11:22:53+00:00','comparison_valid_until':'2026-11-20T17:22:53+00:00','comparison_is_pinned_review_not_automatic_HTML_fetch':True,'provider_publication_per_event':'unknown','coverage':'unknown','coverage_GO':False,'consumer_integration_verified':False,'rows':rows}
+          
           source='https://www.bls.gov/schedule/news_release/bls.ics'
           root=pathlib.Path('site')
           before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in root.glob('latest*') if p.is_file()}
@@ -32,7 +84,11 @@ jobs:
               if evidence['http_status']==200 and evidence['final_url']==source and len(raw)<=2_000_000:
                   path=root/'ics-probe'/('candidate-'+os.environ['GITHUB_RUN_ID']+'.ics');path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
                   evidence['candidate_saved']=True
-                  evidence['validation']='PENDING_FULL_ICALENDAR_AND_FRESHNESS_VALIDATION'
+                  evidence['validation']=validate_ics(raw)
+                  prior={}
+                  for saved in sorted((root/'ics-probe').glob('candidate-*.ics')):
+                      prior[saved.name]={'body_sha256':hashlib.sha256(saved.read_bytes()).hexdigest(),'validation':validate_ics(saved.read_bytes())}
+                  evidence['independent_saved_candidate_checks']=prior
               else:evidence['validation']='response_invalid'
           except Exception as error:
               evidence.update(http_status=getattr(error,'code',None),error_type=type(error).__name__,validation='not_possible_without_successful_acquisition')

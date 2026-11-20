@@ -106,6 +106,12 @@ def validate(document,now):
 
 def collect(out):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);raws={};series={};failures={}
+    history=out/'critical-bls-last-attempt.json'
+    try:previous=json.loads(history.read_text()) if history.exists() else {}
+    except (OSError,ValueError):previous={'consecutive_failures':3}
+    if previous.get('consecutive_failures',0)>=3:
+        print(json.dumps({'status':'automatic_requests_suspended_after3_failures','latest_not_refreshed':True,'all_macro_coverage_GO':False}))
+        return False
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as pool:
         futures={name:pool.submit(fetch,name) for name in SERIES}
         for name,future in futures.items():
@@ -125,6 +131,7 @@ def collect(out):
             attempt.update(status='verified_listed_series_only',assessment=assessment)
         else:attempt.update(status='coverage_unknown',reason='parsed_data_outside_valid_scope',latest_not_refreshed=True)
     else:attempt.update(status='coverage_unknown',latest_not_refreshed=True)
+    attempt['consecutive_failures']=0 if attempt.get('status')=='verified_listed_series_only' else previous.get('consecutive_failures',0)+1
     (out/'critical-bls-last-attempt.json').write_text(json.dumps(attempt,indent=2),encoding='utf-8')
     print(json.dumps(attempt));return attempt.get('status')=='verified_listed_series_only'
 

@@ -1,31 +1,33 @@
 # Official BLS iCalendar — 20 November 2026
 
-**Transport works. Coverage remains NO-GO. H3 consumer integration is not verified.**
+**Download verified twice. Coverage remains NO-GO. H3 consumer integration is unverified.**
 
-Exact official source: https://www.bls.gov/schedule/news_release/bls.ics
+Exact source: https://www.bls.gov/schedule/news_release/bls.ics
 
-| Independent run | Response completed UTC | HTTP | Bytes |
+| Independent run | Actual response completed UTC | HTTP | Bytes |
 | --- | --- | --- | --- |
-| [44727010467](https://github.com/srosario036/hermes-h3-public-calendar/actions/runs/44727010467) | 11:22:13.439863 | 200 | 80672 |
-| [44727334590](https://github.com/srosario036/hermes-h3-public-calendar/actions/runs/44727334590) | 11:24:32.074491 | 200 | 80672 |
+| [44727010467](https://github.com/srosario036/hermes-h3-public-calendar/actions/runs/44727010467) | 11:22:13.439863 | 200 | 80,672 |
+| [44727334590](https://github.com/srosario036/hermes-h3-public-calendar/actions/runs/44727334590) | 11:24:32.074491 | 200 | 80,672 |
 
-Both original byte streams: SHA256 92a350111ace106deaab5584e4084366bd367b594a0d0bad116008d82d63e501.
+Both original bodies have SHA256: 92a350111ace106deaab5584e4084366bd367b594a0d0bad116008d82d63e501.
 
 ## Validation
 
-- Complete VCALENDAR2.0 envelope and balanced components;313 events,313 unique UIDs; valid dates from3January2025 through30December2026.
-- Vendor US-Eastern mapped to America/New_York with US daylight rules: January UTC-05, July UTC-04. Today10:00NY equals15:00UTC/16:00Madrid.
-- All313 events omit required DTSTAMP: parsed vendor subset, **not strict RFC5545 compliance**. Publication times remain unknown; no invented timestamps.
-- Server Last-Modified10June2026 16:56:37GMT. New acquisition time does not prove current content.
-- [Official November list](https://www.bls.gov/schedule/2026/11_sched_list.htm), reviewed20November11:22:53UTC, has10 timed releases; ICS has9. Missing: **Total Factor Productivity for Major Industries,20November10:00 America/New_York**.
-- The discrepancy proves incomplete coverage independently of Last-Modified age. Comparison is a pinned manual review, **not automatic HTML renewal**; expires17:22:53UTC. Future acquisitions cannot renew that comparison.
-- Original candidates, response metadata, hashes, trigger and validations persist under [site/ics-probe](site/ics-probe). Validation of run2 also rechecks the original run1 candidate.
-- No candidate promoted to latest.json. No verified latest existed during these runs. Probe never writes latest*; before/after hashes are recorded. Errors cannot advance an accepted timestamp.
+- Complete VCALENDAR 2.0 envelope and balanced components; 313 events and 313 unique UIDs. Valid dates span 3 January 2025 through 30 December 2026.
+- Vendor US-Eastern normalized to America/New_York using modern US daylight rules: January UTC-05, July UTC-04. Today 10:00 New York equals 15:00 UTC and 16:00 Madrid.
+- All 313 events omit required DTSTAMP. The vendor subset can be parsed, but strict RFC5545 compliance is not asserted. Provider publication timestamps remain unknown.
+- Server Last-Modified: 10 June 2026, 16:56:37 GMT. A successful new retrieval does not prove that the content is up to date.
+- The [official November list](https://www.bls.gov/schedule/2026/11_sched_list.htm), reviewed at 11:22:53 UTC, has 10 timed releases; the ICS has 9. Missing: **Total Factor Productivity for Major Industries, 20 November, 10:00 America/New_York**. Another included event shares that time, but completeness cannot be asserted.
+- This comparison is a pinned review, not an automatic HTML renewal. Its review expires at 17:22:53 UTC. Later ICS acquisitions do not renew the comparison or establish absence of additional events.
+- [Original candidates and attempt evidence](site/ics-probe) include hashes, actual acquisition timestamps, headers, triggers and parsed dates. Run 2 revalidates both independently downloaded candidates.
+- No candidate was promoted to latest.json. No previous verified latest existed in these runs. The probe never writes latest* and records before/after hashes; failures cannot advance an accepted timestamp. This is not a claim that a real prior verified ICS was recovered during a failure.
 
 ## Scheduled acquisition
 
-Temporary five-minute cron tests a real scheduled trigger. Proof currently pending; cron configuration is not execution evidence. Reduce to two-hour cadence after proof.
+The workflow is enabled on main. A temporary five-minute schedule was tested from 11:23:58 UTC; no scheduled run appeared by 11:34:12 UTC. **Actual scheduled execution remains unverified.** It is not inferred from successful manual runs.
 
-## Remaining blocker
+The temporary schedule has been reduced to **minute 23 every two hours UTC**, using only standard free public runners. No follow-up app automation or paid service was created. GitHub may delay or drop scheduled jobs. Transport success remains separate from coverage_GO=false.
 
-Reconcile the ICS with current official release coverage, then separately test the H3 consumer's schema, integrity, original acquisition/expiry and fail-closed behavior. No coverage GO is granted. No Cloud, trading, inference, subscriptions or alternative download variants were used.
+## Concrete next blocker
+
+Resolve the official-source completeness discrepancy and prove the scheduled trigger. Then separately validate the H3 consumer's schema, hash integrity, original acquisition/expiry, publication-time provenance and fail-closed behavior. No coverage GO is granted. No Cloud, trading, inference, subscriptions or alternative download variants were used.

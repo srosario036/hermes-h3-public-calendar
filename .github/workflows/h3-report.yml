@@ -2,7 +2,6 @@ name: H3 private Telegram report
 on:
   schedule:
     - cron: '57 5,6 * * *'
-    - cron: '*/5 * * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -22,28 +21,23 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     steps:
-      - name: Check Madrid window or bounded non-sending probe
+      - name: Check Madrid reporting window
         id: window
         env:
           EVENT_NAME: ${{ github.event_name }}
-          EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: |
           python3 - <<'PY'
           import os,time
           from datetime import datetime,timezone
           from zoneinfo import ZoneInfo
-          allowed=True;probe=False
+          allowed=True
           if os.environ['EVENT_NAME']=='schedule':
-              if os.environ['EVENT_SCHEDULE']=='*/5 * * * *':
-                  probe=True;allowed=datetime.now(timezone.utc)<datetime.fromisoformat('2026-11-21T10:56:00+00:00')
-              else:
-                  now=datetime.now(ZoneInfo('Europe/Madrid'));target=now.replace(hour=8,minute=0,second=0,microsecond=0)
-                  wait=(target-now).total_seconds()
-                  if 0<wait<=240:time.sleep(wait)
-                  now=datetime.now(ZoneInfo('Europe/Madrid'));allowed=now.hour==8 and now.minute<5
+              now=datetime.now(ZoneInfo('Europe/Madrid'));target=now.replace(hour=8,minute=0,second=0,microsecond=0)
+              wait=(target-now).total_seconds()
+              if 0<wait<=240:time.sleep(wait)
+              now=datetime.now(ZoneInfo('Europe/Madrid'));allowed=now.hour==8 and now.minute<5
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
               print('allowed='+str(allowed).lower(),file=f)
-              print('probe='+str(probe).lower(),file=f)
           PY
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         if: steps.window.outputs.allowed == 'true'
@@ -54,7 +48,7 @@ jobs:
         env:
           H3_REPORT_CONFIG: ${{ secrets.H3_REPORT_CONFIG }}
           H3_HOSTED_RUNNER: '1'
-          REPORT_MODE: ${{ steps.window.outputs.probe == 'true' && 'verify' || github.event_name == 'schedule' && 'send' || inputs.mode }}
+          REPORT_MODE: ${{ github.event_name == 'schedule' && 'send' || inputs.mode }}
         run: |
           set +x
           umask 077

@@ -63,5 +63,14 @@ jobs:
           args=[sys.executable,'h3_reporting/h3_offline_report.py','--auth','github','--output',os.environ['RUNNER_TEMP']+'/h3-report']
           if os.environ['REPORT_MODE']=='send':args+=['--send']
           elif os.environ['REPORT_MODE']=='verify':args+=['--verify-bot']
-          raise SystemExit(subprocess.run(args).returncode)
+          rc=subprocess.run(args).returncode
+          if rc==0 and os.environ['REPORT_MODE']=='verify':
+              import json,uuid
+              from datetime import datetime,timezone
+              sys.path.insert(0,'h3_reporting')
+              from h3_offline_report import Google,access_token
+              cfg=json.loads(os.environ['H3_REPORT_CONFIG']);g=Google(access_token('github',cfg),cfg)
+              g.event({'state':'identity_probe','at':datetime.now(timezone.utc).isoformat(),'runner':os.environ['GITHUB_EVENT_NAME'],'attempt':uuid.uuid4().hex})
+              print('Private ledger write verified; no Telegram sent')
+          raise SystemExit(rc)
           PY

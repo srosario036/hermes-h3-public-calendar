@@ -1,13 +1,13 @@
 {
-  "at": "2026-11-23T07:50:36.811921+00:00",
+  "at": "2026-11-23T20:19:12.776011+00:00",
   "failures": {},
   "all_macro_coverage_GO": false,
   "status": "verified_listed_series_only",
   "assessment": {
     "listed_critical_BLS_series_verified": true,
     "events_today": [],
-    "acquired_at": "2026-11-23T07:50:36.794506+00:00",
-    "valid_until": "2026-11-23T13:50:36.794506+00:00",
+    "acquired_at": "2026-11-23T20:19:12.574065+00:00",
+    "valid_until": "2026-11-24T02:19:12.574065+00:00",
     "absence_scope": "Published schedules of these five series only; not unscheduled releases or other publishers",
     "all_macro_coverage_GO": false,
     "trading_authorized": false

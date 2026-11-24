@@ -5,8 +5,8 @@
       "CPI": {
         "source": "https://www.bls.gov/schedule/news_release/cpi.htm",
         "http_status": 200,
-        "acquired_at": "2026-11-24T04:50:32.760418+00:00",
-        "valid_until": "2026-11-24T10:50:32.760418+00:00",
+        "acquired_at": "2026-11-24T17:54:28.950707+00:00",
+        "valid_until": "2026-11-24T23:54:28.950707+00:00",
         "provider_Last_Modified_header": null,
         "provider_publication_at": null,
         "raw_sha256": "03d8ae706002d30efe72ab92b71902a4a58d3f5b17a7fcc5b06eafc2a1ee752f",
@@ -86,8 +86,8 @@
       "PPI": {
         "source": "https://www.bls.gov/schedule/news_release/ppi.htm",
         "http_status": 200,
-        "acquired_at": "2026-11-24T04:50:32.781925+00:00",
-        "valid_until": "2026-11-24T10:50:32.781925+00:00",
+        "acquired_at": "2026-11-24T17:54:28.916724+00:00",
+        "valid_until": "2026-11-24T23:54:28.916724+00:00",
         "provider_Last_Modified_header": null,
         "provider_publication_at": null,
         "raw_sha256": "e92e4867a5657e31583f6725bde3d7b6db008cfdbf8c58cc9d2d595d0815c767",
@@ -167,8 +167,8 @@
       "Employment": {
         "source": "https://www.bls.gov/schedule/news_release/empsit.htm",
         "http_status": 200,
-        "acquired_at": "2026-11-24T04:50:32.743517+00:00",
-        "valid_until": "2026-11-24T10:50:32.743517+00:00",
+        "acquired_at": "2026-11-24T17:54:28.896022+00:00",
+        "valid_until": "2026-11-24T23:54:28.896022+00:00",
         "provider_Last_Modified_header": null,
         "provider_publication_at": null,
         "raw_sha256": "6416c0c679f8fa99a1bf8ad0b701b98913a09dd7eee14ef3a927c6af37abadbb",
@@ -248,8 +248,8 @@
       "JOLTS": {
         "source": "https://www.bls.gov/schedule/news_release/jolts.htm",
         "http_status": 200,
-        "acquired_at": "2026-11-24T04:50:32.790352+00:00",
-        "valid_until": "2026-11-24T10:50:32.790352+00:00",
+        "acquired_at": "2026-11-24T17:54:28.971321+00:00",
+        "valid_until": "2026-11-24T23:54:28.971321+00:00",
         "provider_Last_Modified_header": null,
         "provider_publication_at": null,
         "raw_sha256": "37228deed92a870db953b11517cc3409856247ffb0e1bcaf771484568b3adf99",
@@ -324,8 +324,8 @@
       "ECI": {
         "source": "https://www.bls.gov/schedule/news_release/eci.htm",
         "http_status": 200,
-        "acquired_at": "2026-11-24T04:50:32.804184+00:00",
-        "valid_until": "2026-11-24T10:50:32.804184+00:00",
+        "acquired_at": "2026-11-24T17:54:28.958984+00:00",
+        "valid_until": "2026-11-24T23:54:28.958984+00:00",
         "provider_Last_Modified_header": null,
         "provider_publication_at": null,
         "raw_sha256": "2a52a6637d08ddc8f229730043b7222c9ff59f52c86e4d767b84940dc0b77f2b",
@@ -364,9 +364,9 @@
       "method": "BLS official calendar Eastern Time convention independently reviewed20Nov2026; series pages contain clock times without their own timezone marker. DST follows IANA rules, not fixed UTC offset."
     }
   },
-  "content_sha256": "6e8a06c565f63fe38f815d736cf8400c3cf9d3fc707e7bde30b007e91bf816c7",
+  "content_sha256": "4feb5adc7ee802fe3202a5e4b6bb074fb49f21d6f7e909dc328d151972c9f508",
   "collector_sha256": "7a725772cfae64fde9e7c9ef4b610ca2741ef8ab1170ea89d4e46450f4e2b6c3",
-  "run_id": "45329150563",
+  "run_id": "45453672992",
   "scope": "CPI/PPI/Employment/JOLTS/ECI only; not all BLS, Fed, BEA, Census, DOL or private-publisher events",
   "publisher_signature": false
 }

@@ -114,7 +114,10 @@ def full_seen(events,sha):return any(e.get('jsonPayload',{}).get('source_sha256'
 
 def deliver(google,item,vm,now,out,send=False,recovery=False):
  day=now.astimezone(MADRID).date().isoformat();events=google.logs(ledger_filter(google.cfg['project']))
- if already_day(events,day):return {'status':'already_claimed_no_duplicate','messages_sent':0}
+ if already_day(events,day):
+  confirmed=any(e.get('jsonPayload',{}).get('day')==day and e['jsonPayload'].get('state')=='confirmed' for e in events)
+  if send and not confirmed:raise SafeError('daily_delivery_unconfirmed_no_retry')
+  return {'status':'already_claimed_no_duplicate','messages_sent':0,'delivery_confirmed':confirmed}
  full=item.get('summary') is not None and not full_seen(events,item['sha256']);text=compose(item,vm,now,full=full)
  out.mkdir(parents=True,exist_ok=True);evidence(out/'report-preview.txt',text)
  if not send:return {'status':'preview_only','messages_sent':0,'kind':'full' if full else 'status_only'}

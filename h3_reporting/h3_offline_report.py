@@ -94,6 +94,8 @@ def compose(item,vm,now,full=True):
  day=datetime.fromisoformat(item['session_date']).strftime('%d/%m/%Y')
  state='DETENIDO' if vm['status']=='TERMINATED' else vm['status']
  lines=['HERMES H3 — '+local.strftime('%d/%m/%Y %H:%M Madrid'),'Última sesión observada: '+day+' (observación parcial).','Estado actual H3: '+state+'.']
+ delay=int((local-local.replace(hour=8,minute=0,second=0,microsecond=0)).total_seconds()//60)
+ if delay>=5:lines+=['Informe diario recuperado con retraso de '+str(delay)+' min respecto a las 08:00 Madrid.']
  if item['session_date']!=local.date().isoformat():lines+=['Sin datos nuevos de hoy. Se informa el último resultado disponible.']
  if not full:return '\n'.join(lines+['El resultado consolidado ya fue informado; no se repiten sus cifras.','Paper desactivado; LIVE bloqueado. Sin nuevas inferencias de pago.'])
  lines += ['Cierre de evidencia: '+stamp(s['generated_at']).astimezone(MADRID).strftime('%d/%m %H:%M Madrid')+'.',f"Capturas {s['captures']}; contratos únicos {s['unique_contracts']}; evaluaciones {s['evaluations']}; repeticiones {s['repeated_evaluations']}.",f"Cotizaciones frescas al capturar: {s['fresh_quote_evaluations']} evaluaciones; OI aceptado: {s['oi_accepted_unique']} contratos únicos.",'Presupuestos hipotéticos USD — asequibles / elegibles:']
@@ -117,7 +119,9 @@ def deliver(google,item,vm,now,out,send=False,recovery=False):
  out.mkdir(parents=True,exist_ok=True);evidence(out/'report-preview.txt',text)
  if not send:return {'status':'preview_only','messages_sent':0,'kind':'full' if full else 'status_only'}
  local=now.astimezone(MADRID)
- if not recovery and not(local.hour==8 and local.minute<5):return {'status':'outside_daily_window','messages_sent':0}
+ # GitHub can enqueue hours late. Keep the current-day daily key and never
+ # discard an otherwise valid report merely because the 08:00 target passed.
+ if not recovery and local.hour<8:return {'status':'before_daily_target','messages_sent':0}
  token,recipient=google.telegram_credentials()
  attempt=uuid.uuid4().hex;claim={'day':day,'key':'morning:'+day,'state':'claimed','kind':'full' if full else 'status_only','attempt':attempt,'at':now.isoformat(),'source_sha256':item['sha256'],'last_session':item['session_date'],'text_sha256':hashlib.sha256(text.encode()).hexdigest(),'mode':'explicit_recovery' if recovery else 'scheduled'}
  # Before-send durable claim. A single hosted concurrency group owns future
@@ -186,6 +190,7 @@ def main():
   else:result=deliver(g,item,vm,now,args.output,send=args.send,recovery=bool(args.recovery_date))
   evidence(args.output/'last-run.json',json.dumps(result,indent=2))
   print(json.dumps({'status':result['status'],'messages_sent':result['messages_sent']}))
+  if args.send and result['status'] not in ['confirmed','already_claimed_no_duplicate','before_daily_target']:raise SafeError('daily_delivery_not_completed')
 if __name__=='__main__':
  try:main()
  except Exception as e:print(json.dumps({'status':'blocked','error_type':type(e).__name__,'reason':str(e) if isinstance(e,SafeError) else 'details_omitted'}));raise SystemExit(1)

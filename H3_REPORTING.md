@@ -1,13 +1,13 @@
 # H3 external report
 
-The user authorized a report-only extension of this public calendar repository. Only the report workflow on main may exchange its GitHub identity for a temporary, restricted H3 reporting identity. Calendar jobs have no Cloud identity.
+The user authorized a report-only extension of this public calendar repository. Federation is restricted to the report workflow on main; public calendar jobs have no Cloud identity.
 
-Public files contain generic code only. Encrypted repository configuration contains metadata, not Telegram tokens. The two Telegram values and private aggregates stay in memory; no financial artifacts, caches or result logs are published. No service account JSON keys are created.
+Public code contains no private results or credentials. Encrypted metadata configuration is separate. Telegram values and private aggregates remain in memory; no financial artifacts or caches are uploaded. No service-account JSON keys are created. The identity cannot start the VM, access broker/model credentials, place orders or run inference.
 
-The reporter reads existing H3 evidence and VM status. It cannot start the VM, access broker/model credentials, place orders or run paid inference. The VM need not run for reporting.
+Daily target: 08:00 Europe/Madrid. A same-workflow hourly backup retries delayed or missed schedules after that target. Only the current Madrid day is delivered, once: one concurrency group and a durable private before-send daily claim suppress duplicate attempts. Unknown Telegram outcomes are never automatically resent. A prior session becomes an explicitly dated stale/stopped status, not new financial results. Missing evidence is NO EVALUABLE.
 
-Daily target: 08:00 Europe/Madrid. One concurrency group and a durable private before-send claim prevent duplicate attempts; uncertain sends are not automatically retried. A previously delivered session becomes a short dated status, not new financial results. Missing evidence is NO EVALUABLE.
+The former 08:00–08:04 discard gate was removed after real scheduled runs arrived late and silently skipped delivery. Delayed reports now state their actual timestamp and delay. A job cannot report success for an unexplained missed send.
 
-Manual hosted identity and private ledger checks succeeded without another Telegram. A real schedule run and first daily delivery are distinct acceptance checks. GitHub may delay/drop scheduled jobs or disable schedules after 60 days of inactivity; configuration alone is not proof of delivery. The current delivery window is 08:00–08:04 Madrid.
+GitHub schedules are best effort: exact 08:00 delivery cannot be guaranteed, and scheduled jobs may be delayed or dropped. Public schedules may be disabled after 60 days of inactivity. Actual scheduled delivery requires a schedule-event run plus a private Telegram confirmation; manual tests or green skipped jobs are insufficient evidence.
 
-Future H3 observer installs must keep the legacy local report timer disabled. Standard public GitHub runners are used; no paid subscription or new compute resource is required.
+Future H3 observer installs must keep legacy report timers disabled. The trading VM need not run for reporting. Standard free public GitHub runners and previously authorized H3 services only. No extra infrastructure or subscriptions.

@@ -129,6 +129,7 @@ def deliver(google,item,vm,now,out,send=False,recovery=False):
  attempt=uuid.uuid4().hex;claim={'day':day,'key':'morning:'+day,'state':'claimed','kind':'full' if full else 'status_only','attempt':attempt,'at':now.isoformat(),'source_sha256':item['sha256'],'last_session':item['session_date'],'text_sha256':hashlib.sha256(text.encode()).hexdigest(),'mode':'explicit_recovery' if recovery else 'scheduled'}
  # Before-send durable claim. A single hosted concurrency group owns future
  # sends; during bootstrap there is one local locked process, never both.
+ claim.update(execution_origin=os.environ.get('GITHUB_EVENT_NAME','local'),workflow_run_id=os.environ.get('GITHUB_RUN_ID'))
  google.event(claim)
  persisted=False
  for _ in range(6):
